@@ -8,8 +8,12 @@
 #Chance from 0.0 to 1.0, 1 = 100%
 chance-to-have-a-bee-nest: 0.05
 
+#Do you want to allow trees with bees if using bone meal?
+allow-bonemeal: false
+
 #How many bees per tree with nest
-bees-per-nest: 2
+min-bees-per-nest: 1
+max-bees-per-nest: 3
 
 #enabling this option will allow all biome ignoring the list below
 allow-all-biomes: false

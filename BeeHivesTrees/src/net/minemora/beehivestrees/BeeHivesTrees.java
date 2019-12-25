@@ -3,6 +3,7 @@ package net.minemora.beehivestrees;
 import java.util.Random;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -34,13 +35,16 @@ public class BeeHivesTrees extends JavaPlugin implements Listener {
 		if(!ConfigMain.isAllowAllBiomes() && !ConfigMain.getBiomes().contains(event.getLocation().getBlock().getBiome().name())) {
 			return;
 		}
+		if(event.isFromBonemeal() && !ConfigMain.isAllowBonemeal()) {
+			return;
+		}
 		if(random.nextFloat() <= ConfigMain.getChanceToHaveNest()) {
 			new BukkitRunnable() {
 				@Override
 				public void run() {
 					for(BlockState bs : event.getBlocks()) {
 						Block block = bs.getBlock();
-						if(!block.getType().name().endsWith("LEAVES")) {
+						if(!Tag.LEAVES.getValues().contains(block.getType())) {
 							continue;
 						}
 						if(block.getRelative(BlockFace.DOWN).getType() != Material.AIR) {
@@ -48,7 +52,8 @@ public class BeeHivesTrees extends JavaPlugin implements Listener {
 						}
 						Block hive = block.getRelative(BlockFace.DOWN);
 						hive.setType(Material.BEE_NEST);
-						for(int i = 0; i < ConfigMain.getBeesPerNest(); i++) {
+						int beeCount = random.nextInt((ConfigMain.getMaxBeesPerNest() - ConfigMain.getMinBeesPerNest()) + 1) + ConfigMain.getMinBeesPerNest();
+						for(int i = 0; i < beeCount; i++) {
 							Bee bee = (Bee) block.getWorld().spawnEntity(hive.getLocation().add(0, -1, 0), EntityType.BEE);
 							bee.setHive(hive.getLocation());
 						}

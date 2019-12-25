@@ -10,9 +10,11 @@ public final class ConfigMain extends Config {
 	private static ConfigMain instance;
 	
 	private static float chanceToHaveNest;
-	private static int beesPerNest;
+	private static int minBeesPerNest;
+	private static int maxBeesPerNest;
 	private static boolean allowAllTrees;
 	private static boolean allowAllBiomes;
+	private static boolean allowBonemeal;
 	private static List<String> treeTypes = new ArrayList<>();
 	private static List<String> biomes = new ArrayList<>();
 
@@ -23,9 +25,11 @@ public final class ConfigMain extends Config {
 	@Override
 	public void load(boolean firstCreate) {
 		chanceToHaveNest = (float) getConfig().getDouble("chance-to-have-a-bee-nest", 0.05);
-		beesPerNest = getConfig().getInt("bees-per-nest", 2);
+		minBeesPerNest = getConfig().getInt("min-bees-per-nest", 1);
+		maxBeesPerNest = getConfig().getInt("max-bees-per-nest", 3);
 		allowAllTrees = getConfig().getBoolean("allow-all-tree-types", false);
 		allowAllBiomes = getConfig().getBoolean("allow-all-biomes", false);
+		allowBonemeal = getConfig().getBoolean("allow-bonemeal", false);
 		treeTypes = getConfig().getStringList("allowed-tree-types");
 		biomes = getConfig().getStringList("allowed-biomes");
 	}
@@ -50,10 +54,6 @@ public final class ConfigMain extends Config {
 		return chanceToHaveNest;
 	}
 
-	public static int getBeesPerNest() {
-		return beesPerNest;
-	}
-
 	public static boolean isAllowAllTrees() {
 		return allowAllTrees;
 	}
@@ -67,5 +67,17 @@ public final class ConfigMain extends Config {
 
 	public static List<String> getBiomes() {
 		return biomes;
+	}
+
+	public static boolean isAllowBonemeal() {
+		return allowBonemeal;
+	}
+
+	public static int getMinBeesPerNest() {
+		return minBeesPerNest;
+	}
+
+	public static int getMaxBeesPerNest() {
+		return maxBeesPerNest;
 	}
 }
